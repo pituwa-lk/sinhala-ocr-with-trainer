@@ -1,0 +1,2 @@
+https://github.com/sksamuel/scrimage
+https://github.com/nayuki/BMP-IO

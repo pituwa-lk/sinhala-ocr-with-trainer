@@ -1,0 +1,33 @@
+BufferedImage in = ImageIO.read(new File("D:\\SourceImage.bmp"));
+int w = in.getWidth(), h = in.getHeight();
+int[][] array = new int[w][h];
+for (int j = 0; j < w; j++) {
+    for (int k = 0; k < h; k++) {
+        array[j][k] = in.getRGB(j, k);
+    }
+}
+
+// perform operations on array[ ][ ]
+
+byte[] v = new byte[2];
+for (int i = 0; i < v.length; ++i) {
+    v[i] = (byte) (i );
+}
+ColorModel cm = new IndexColorModel(1, v.length, v, v, v);
+WritableRaster wr = cm.createCompatibleWritableRaster(w, h);
+BufferedImage out = new BufferedImage(cm, wr, false, null);
+for (int y = 0; y < h; y++) {
+    for (int x = 0; x < w; x++) {
+        int Pixel = array[x][y] << 16 | array[x][y] << 8 | array[x][y];
+        out.setRGB(x, y, array[x][y]);
+    }
+}
+Graphics2D g = out.createGraphics();
+g.drawImage(out, 0, 0, null);
+g.dispose();
+ImageIO.write(out, "bmp", new File("D:\\ResultImage.bmp"));
+
+//Your values for v need to be 0 and 255, not 0 and 1. Otherwise you'll get an image with dark values RGB(0, 0, 0) and light values RGB(1, 1, 1) which appears to be all black.
+
+byte[] v = {(byte) 0, (byte) 0xff};
+
